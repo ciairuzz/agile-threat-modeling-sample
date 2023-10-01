@@ -1,324 +1,334 @@
 threagile_version: 1.0.0
 title: Sample Application
 author:
-    name: Ciro Bologna
-    homepage: ""
+  name: Ciro Bologna
+  homepage: ""
 date: "2023-09-27"
 business_overview:
-    description: This sample app can be used to send and store greetings to your friendly security architect
-    images: []
+  description: This sample app can be used to send and store greetings to your friendly security architect
+  images: [ ]
 technical_overview:
-    description: frontend is in react (which I never used before), backend is in spring boot, database is mysql
-    images: []
+  description: frontend is in react (which I never used before), backend is in spring boot, database is mysql
+  images: [ ]
 business_criticality: important
 management_summary_comment: Threat modeling should be part of SDLC
 questions:
-    Some question with an answer?: |
-        Some answer
-    Some question without an answer?: ""
+  Some question with an answer?: |
+    Some answer
+  Some question without an answer?: ""
 abuse_cases:
-    Abuse Case 1: |
-        A malicious user can impersonate somebody else and say bad words to the security architect
-    Abuse Case 2: |
-        A malicious external user can attempt exfiltrating greetings meant for the security architect eyes only
-    Abuse Case 3: |
-        A malicious admin with access to the database can attempt modifying the greeting value
+  Abuse Case 1: |
+    A malicious user can impersonate somebody else and say bad words to the security architect
+  Abuse Case 2: |
+    A malicious external user can attempt exfiltrating greetings meant for the security architect eyes only
+  Abuse Case 3: |
+    A malicious admin with access to the database can attempt modifying the greeting value
 security_requirements:
-    Authentication: Authentication is required to avoid unpleasant greetings from trolls.
-    Input Validation: Strict input validation is required to reduce the overall attack surface.
+  Authentication: Authentication is required to avoid unpleasant greetings from trolls.
+  Input Validation: Strict input validation is required to reduce the overall attack surface.
 tags_available:
-    - aws
-    - aws:apigateway
-    - aws:dynamodb
-    - aws:ebs
-    - aws:ec2
-    - aws:iam
-    - aws:lambda
-    - aws:rds
-    - aws:s3
-    - aws:sqs
-    - aws:vpc
-    - azure
-    - docker
-    - gcp
-    - git
-    - kubernetes
-    - nexus
-    - ocp
-    - openshift
-    - tomcat
-    - react
-    - nginx
-    - spring
-    - mysql
-    - some-other-tag
-    - aws secret manager
+  - aws
+  - aws:apigateway
+  - aws:dynamodb
+  - aws:ebs
+  - aws:ec2
+  - aws:iam
+  - aws:lambda
+  - aws:rds
+  - aws:s3
+  - aws:sqs
+  - aws:vpc
+  - azure
+  - docker
+  - gcp
+  - git
+  - kubernetes
+  - nexus
+  - ocp
+  - openshift
+  - tomcat
+  - react
+  - nginx
+  - spring
+  - mysql
+  - some-other-tag
+  - aws secret manager
 data_assets:
-    Configuration Secrets:
-        id: configuration-secrets
-        description: Configuration secrets (like credentials, keys, certificates, etc.) secured and managed by a vault
-        usage: devops
-        tags: []
-        origin: ""
-        owner: ""
-        quantity: very-few
-        confidentiality: strictly-confidential
-        integrity: critical
-        availability: critical
-        justification_cia_rating: Configuration secrets are rated as being 'strictly-confidential'.
-    Greetings:
-        id: greetings
-        description: few words
-        usage: business
-        tags: []
-        origin: Users
-        owner: Security Architect
-        quantity: many
-        confidentiality: confidential
-        integrity: critical
-        availability: archive
-        justification_cia_rating: greetings should remain private and should not be disclosed to unauthorized users
+  Configuration Secrets:
+    id: configuration-secrets
+    description: Configuration secrets (like credentials, keys, certificates, etc.) secured and managed by a vault
+    usage: devops
+    tags: [ ]
+    origin: ""
+    owner: ""
+    quantity: very-few
+    confidentiality: strictly-confidential
+    integrity: critical
+    availability: critical
+    justification_cia_rating: Configuration secrets are rated as being 'strictly-confidential'.
+  Greetings:
+    id: greetings
+    description: few words
+    usage: business
+    tags: [ ]
+    origin: Users
+    owner: Security Architect
+    quantity: many
+    confidentiality: confidential
+    integrity: critical
+    availability: archive
+    justification_cia_rating: greetings should remain private and should not be disclosed to unauthorized users
 technical_assets:
-    AWS Secret Manager Vault:
-        id: aws-secret-manager-vault
-        description: AWS Secret Manager Vault
-        type: process
+  AWS Secret Manager Vault:
+    id: aws-secret-manager-vault
+    description: AWS Secret Manager Vault
+    type: process
+    usage: devops
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: service
+    technology: vault
+    tags:
+      - aws secret manager
+    internet: false
+    machine: serverless
+    encryption: transparent
+    owner: ""
+    confidentiality: strictly-confidential
+    integrity: critical
+    availability: critical
+    justification_cia_rating: Vault components are rated as 'strictly-confidential'.
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: false
+    data_assets_processed:
+      - configuration-secrets
+    data_assets_stored: [ ]
+    data_formats_accepted: [ ]
+    diagram_tweak_order: 0
+    communication_links: { }
+  Backend:
+    id: backend
+    description: Some Description
+    type: process
+    usage: business
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: web-service-rest
+    tags:
+      - tomcat
+      - spring
+    internet: false
+    machine: container
+    encryption: none
+    owner: Some Owner
+    confidentiality: confidential
+    integrity: critical
+    availability: critical
+    justification_cia_rating: Some Justification
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+      - greetings
+      - configuration-secrets
+    data_assets_stored: [ ]
+    data_formats_accepted:
+      - json
+    diagram_tweak_order: 0
+    communication_links:
+      Server Traffic:
+        target: database
+        description: Some Description
+        protocol: jdbc
+        authentication: credentials
+        authorization: none
+        tags: [ ]
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: business
+        data_assets_sent:
+          - greetings
+        data_assets_received:
+          - greetings
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+      Vault Access (backend):
+        target: aws-secret-manager-vault
+        description: Vault Access Traffic (by backend)
+        protocol: https
+        authentication: externalized
+        authorization: technical-user
+        tags: [ ]
+        vpn: false
+        ip_filtered: false
+        readonly: true
         usage: devops
-        used_as_client_by_human: false
-        out_of_scope: false
-        justification_out_of_scope: ""
-        size: service
-        technology: vault
-        tags:
-            - aws secret manager
-        internet: false
-        machine: serverless
-        encryption: transparent
-        owner: ""
-        confidentiality: strictly-confidential
-        integrity: critical
-        availability: critical
-        justification_cia_rating: Vault components are rated as 'strictly-confidential'.
-        multi_tenant: false
-        redundant: false
-        custom_developed_parts: false
-        data_assets_processed:
-            - configuration-secrets
-        data_assets_stored: []
-        data_formats_accepted: []
-        diagram_tweak_order: 0
-        communication_links: {}
-    Backend:
-        id: backend
+        data_assets_sent: [ ]
+        data_assets_received:
+          - configuration-secrets
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
+  Database:
+    id: database
+    description: Some Description
+    type: process
+    usage: business
+    used_as_client_by_human: false
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: component
+    technology: database
+    tags:
+      - mysql
+    internet: false
+    machine: container
+    encryption: none
+    owner: Some Owner
+    confidentiality: confidential
+    integrity: critical
+    availability: critical
+    justification_cia_rating: Some Justification
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+      - greetings
+    data_assets_stored:
+      - greetings
+    data_formats_accepted:
+      - serialization
+    diagram_tweak_order: 0
+    communication_links: { }
+  Frontend:
+    id: frontend
+    description: react frontend
+    type: process
+    usage: business
+    used_as_client_by_human: true
+    out_of_scope: false
+    justification_out_of_scope: ""
+    size: application
+    technology: browser
+    tags:
+      - react
+      - nginx
+    internet: true
+    machine: container
+    encryption: transparent
+    owner: Some Owner
+    confidentiality: public
+    integrity: critical
+    availability: operational
+    justification_cia_rating: Some Justification
+    multi_tenant: false
+    redundant: false
+    custom_developed_parts: true
+    data_assets_processed:
+      - greetings
+    data_assets_stored: [ ]
+    data_formats_accepted:
+      - json
+    diagram_tweak_order: 0
+    communication_links:
+      User Traffic:
+        target: backend
         description: Some Description
-        type: process
+        protocol: https
+        authentication: none
+        authorization: none
+        tags: [ ]
+        vpn: false
+        ip_filtered: false
+        readonly: false
         usage: business
-        used_as_client_by_human: false
-        out_of_scope: false
-        justification_out_of_scope: ""
-        size: component
-        technology: web-service-rest
-        tags:
-            - tomcat
-            - spring
-        internet: false
-        machine: container
-        encryption: none
-        owner: Some Owner
-        confidentiality: confidential
-        integrity: critical
-        availability: critical
-        justification_cia_rating: Some Justification
-        multi_tenant: false
-        redundant: false
-        custom_developed_parts: true
-        data_assets_processed:
-            - greetings
-            - configuration-secrets
-        data_assets_stored: []
-        data_formats_accepted:
-            - json
-        diagram_tweak_order: 0
-        communication_links:
-            Server Traffic:
-                target: database
-                description: Some Description
-                protocol: jdbc
-                authentication: credentials
-                authorization: none
-                tags: []
-                vpn: false
-                ip_filtered: false
-                readonly: false
-                usage: business
-                data_assets_sent:
-                    - greetings
-                data_assets_received:
-                    - greetings
-                diagram_tweak_weight: 0
-                diagram_tweak_constraint: false
-            Vault Access (backend):
-                target: aws-secret-manager-vault
-                description: Vault Access Traffic (by backend)
-                protocol: https
-                authentication: externalized
-                authorization: technical-user
-                tags: []
-                vpn: false
-                ip_filtered: false
-                readonly: true
-                usage: devops
-                data_assets_sent: []
-                data_assets_received:
-                    - configuration-secrets
-                diagram_tweak_weight: 0
-                diagram_tweak_constraint: false
-    Database:
-        id: database
-        description: Some Description
-        type: process
-        usage: business
-        used_as_client_by_human: false
-        out_of_scope: false
-        justification_out_of_scope: ""
-        size: component
-        technology: database
-        tags:
-            - mysql
-        internet: false
-        machine: container
-        encryption: none
-        owner: Some Owner
-        confidentiality: confidential
-        integrity: critical
-        availability: critical
-        justification_cia_rating: Some Justification
-        multi_tenant: false
-        redundant: false
-        custom_developed_parts: true
-        data_assets_processed:
-            - greetings
-        data_assets_stored:
-            - greetings
-        data_formats_accepted:
-            - serialization
-        diagram_tweak_order: 0
-        communication_links: {}
-    Frontend:
-        id: frontend
-        description: react frontend
-        type: process
-        usage: business
-        used_as_client_by_human: true
-        out_of_scope: false
-        justification_out_of_scope: ""
-        size: application
-        technology: browser
-        tags:
-            - react
-            - nginx
-        internet: true
-        machine: container
-        encryption: transparent
-        owner: Some Owner
-        confidentiality: public
-        integrity: critical
-        availability: operational
-        justification_cia_rating: Some Justification
-        multi_tenant: false
-        redundant: false
-        custom_developed_parts: true
-        data_assets_processed:
-            - greetings
-        data_assets_stored: []
-        data_formats_accepted:
-            - json
-        diagram_tweak_order: 0
-        communication_links:
-            User Traffic:
-                target: backend
-                description: Some Description
-                protocol: https
-                authentication: none
-                authorization: none
-                tags: []
-                vpn: false
-                ip_filtered: false
-                readonly: false
-                usage: business
-                data_assets_sent:
-                    - greetings
-                data_assets_received: []
-                diagram_tweak_weight: 0
-                diagram_tweak_constraint: false
+        data_assets_sent:
+          - greetings
+        data_assets_received: [ ]
+        diagram_tweak_weight: 0
+        diagram_tweak_constraint: false
 trust_boundaries:
-    Trust Boundary:
-        id: trusted-boundary
-        description: Some Description
-        type: network-cloud-security-group
-        tags: []
-        technical_assets_inside:
-            - backend
-            - database
-            - aws-secret-manager-vault
-        trust_boundaries_nested: []
+  Trust Boundary:
+    id: trusted-boundary
+    description: Some Description
+    type: network-cloud-security-group
+    tags: [ ]
+    technical_assets_inside:
+      - backend
+      - database
+      - aws-secret-manager-vault
+    trust_boundaries_nested: [ ]
 shared_runtimes:
-    EKS:
-        id: eks
-        description: AWS containerization
-        tags: []
-        technical_assets_running:
-            - frontend
-            - backend
-            - database
+  EKS:
+    id: eks
+    description: AWS containerization
+    tags: [ ]
+    technical_assets_running:
+      - frontend
+      - backend
+      - database
 individual_risk_categories:
-    Some Individual Risk Example:
-        id: something-strange
-        description: Some text describing the risk category...
-        impact: Some text describing the impact...
-        asvs: V0 - Something Strange
-        cheat_sheet: https://example.com
-        action: Some text describing the action...
-        mitigation: Some text describing the mitigation...
-        check: Check if XYZ...
-        function: business-side
-        stride: repudiation
-        detection_logic: Some text describing the detection logic...
-        risk_assessment: Some text describing the risk assessment...
-        false_positives: Some text describing the most common types of false positives...
-        model_failure_possible_reason: false
-        cwe: 693
-        risks_identified:
-            <b>Example Individual Risk</b> at <b>Some Technical Asset</b>:
-                severity: critical
-                exploitation_likelihood: likely
-                exploitation_impact: medium
-                data_breach_probability: probable
-                data_breach_technical_assets:
-                    - database
-                most_relevant_data_asset: ""
-                most_relevant_technical_asset: database
-                most_relevant_communication_link: ""
-                most_relevant_trust_boundary: ""
-                most_relevant_shared_runtime: ""
+  Some Individual Risk Example:
+    id: something-strange
+    description: Some text describing the risk category...
+    impact: Some text describing the impact...
+    asvs: V0 - Something Strange
+    cheat_sheet: https://example.com
+    action: Some text describing the action...
+    mitigation: Some text describing the mitigation...
+    check: Check if XYZ...
+    function: business-side
+    stride: repudiation
+    detection_logic: Some text describing the detection logic...
+    risk_assessment: Some text describing the risk assessment...
+    false_positives: Some text describing the most common types of false positives...
+    model_failure_possible_reason: false
+    cwe: 693
+    risks_identified:
+      <b>Example Individual Risk</b> at <b>Some Technical Asset</b>:
+        severity: critical
+        exploitation_likelihood: likely
+        exploitation_impact: medium
+        data_breach_probability: probable
+        data_breach_technical_assets:
+          - database
+        most_relevant_data_asset: ""
+        most_relevant_technical_asset: database
+        most_relevant_communication_link: ""
+        most_relevant_trust_boundary: ""
+        most_relevant_shared_runtime: ""
 risk_tracking:
-    unencrypted-asset@database:
-        status: accepted
-        justification: Risk accepted as tolerable
-        ticket: XYZ-1234
-        date: "2023-10-01"
-        checked_by: Ciro Bologna
+  unencrypted-asset@database:
+    status: accepted
+    justification: Risk accepted as tolerable
+    ticket: XYZ-1234
+    date: "2023-10-01"
+    checked_by: Ciro Bologna
+
+  missing-hardening@*: # wildcards "*" between the @ characters are possible
+    status: in-discussion # values: unchecked, in-discussion, accepted, in-progress, mitigated, false-positive
+    justification: The hardening measures on the docker images are completed, the network ones in progress
+    ticket: XYZ-1234
+    date: 2023-01-10
+    checked_by: Ciro Bologna
+
+  sql-nosql-injection@*: # wildcards "*" between the @ characters are possible
+    status: mitigated # values: unchecked, in-discussion, accepted, in-progress, mitigated, false-positive
+    justification: The backend is using hibernate and not manipulating SQL directly
+    ticket: XYZ-1234
+    date: 2023-01-10
+    checked_by: Ciro Bologna
+
 diagram_tweak_nodesep: 0
 diagram_tweak_ranksep: 0
 diagram_tweak_edge_layout: ""
 diagram_tweak_suppress_edge_labels: false
 diagram_tweak_layout_left_to_right: false
-diagram_tweak_invisible_connections_between_assets: []
-diagram_tweak_same_rank_assets: []
+diagram_tweak_invisible_connections_between_assets: [ ]
 
-missing-hardening@*: # wildcards "*" between the @ characters are possible
-        status: in-discussion # values: unchecked, in-discussion, accepted, in-progress, mitigated, false-positive
-        justification: The hardening measures on the docker images are completed, the network ones in progress
-        ticket: XYZ-1234
-        date: 2023-01-10
-        checked_by: Ciro Bologna
+diagram_tweak_same_rank_assets: [ ]
+
