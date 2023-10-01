@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Create folder
         run: |
-          mkdir -p threagile
+          mkdir -p ../../threagile-output
      
       # Run Threagile
       - name: Run Threagile
