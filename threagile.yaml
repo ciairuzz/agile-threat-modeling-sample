@@ -315,3 +315,10 @@ diagram_tweak_suppress_edge_labels: false
 diagram_tweak_layout_left_to_right: false
 diagram_tweak_invisible_connections_between_assets: []
 diagram_tweak_same_rank_assets: []
+
+missing-hardening@*: # wildcards "*" between the @ characters are possible
+        status: in-discussion # values: unchecked, in-discussion, accepted, in-progress, mitigated, false-positive
+        justification: The hardening measures on the docker images are completed, the network ones in progress
+        ticket: XYZ-1234
+        date: 2023-01-10
+        checked_by: Ciro Bologna
