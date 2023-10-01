@@ -78,7 +78,7 @@ jobs:
       env:
        MAVEN_CLI_OPTS: >-
          -V --no-transfer-progress -Dspring.main.banner-mode=off
-      run: mvn ${{ env.MAVEN_CLI_OPTS}} clean package -f "pom.xml" -B -V -e -Dfindbugs.skip
+      run: mvn ${{ env.MAVEN_CLI_OPTS}} clean package -f "backend/pom.xml" -B -V -e -Dfindbugs.skip
           -Dcheckstyle.skip -Dpmd.skip=true -Dspotbugs.skip -Denforcer.skip -Dmaven.javadoc.skip
           -DskipTests -Dmaven.test.skip.exec -Dlicense.skip=true -Drat.skip=true -Dspotless.check.skip=true -t /home/runner/.m2/toolchains.xml
 
