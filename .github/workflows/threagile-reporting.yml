@@ -13,9 +13,6 @@ jobs:
       # Checkout the repo
       - name: Checkout Workspace
         uses: actions/checkout@v2
-      - name: Create folder
-        run: |
-          mkdir -p ../../threagile-output
      
       # Run Threagile
       - name: Run Threagile
@@ -29,4 +26,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: threagile-report
-          path: ../../threagile-output
+          path: threagile/output
