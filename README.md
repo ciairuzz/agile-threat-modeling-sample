@@ -15,3 +15,6 @@ E.g. adding a vault to store secret if we forgot to mention
 
 This might mitigate risks and also flag new ones!
 
+Interesting macro to add the build pipeline
+`threagile -execute-model-macro add-build-pipeline -model /app/work/threagile.yaml`
+
