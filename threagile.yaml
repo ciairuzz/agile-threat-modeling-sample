@@ -100,7 +100,7 @@ data_assets:
 
   Greetings:
     id: greetings
-    description: Some Description
+    description: few words
     usage: business # values: business, devops
     tags:
     origin: Users
@@ -133,7 +133,7 @@ technical_assets:
     owner: Some Owner
     confidentiality: public # values: public, internal, restricted, confidential, strictly-confidential
     integrity: critical # values: archive, operational, important, critical, mission-critical
-    availability: critical # values: archive, operational, important, critical, mission-critical
+    availability: operational # values: archive, operational, important, critical, mission-critical
     justification_cia_rating: Some Justification
     multi_tenant: false
     redundant: false
@@ -144,8 +144,8 @@ technical_assets:
     data_formats_accepted: # sequence of formats like: json, xml, serialization, file, csv
       - json
     communication_links:
-      Some Traffic:
-        target: some-other-component
+      User Traffic:
+        target: backend
         description: Some Description
         protocol: https # values: see help
         authentication: none # values: none, credentials, session-id, token, client-certificate, two-factor
@@ -156,7 +156,7 @@ technical_assets:
         readonly: false
         usage: business # values: business, devops
         data_assets_sent: # sequence of IDs to reference
-          - some-data
+          - greetings
         data_assets_received: # sequence of IDs to reference
 
 
@@ -190,6 +190,21 @@ technical_assets:
     data_formats_accepted: # sequence of formats like: json, xml, serialization, file, csv
       - json
     communication_links:
+      Server Traffic:
+        target: database
+        description: Some Description
+        protocol: jdbc # values: see help
+        authentication: none # values: none, credentials, session-id, token, client-certificate, two-factor
+        authorization: none # values: none, technical-user, enduser-identity-propagation
+        tags:
+        vpn: false
+        ip_filtered: false
+        readonly: false
+        usage: business # values: business, devops
+        data_assets_sent: # sequence of IDs to reference
+          - greetings
+        data_assets_received: # sequence of IDs to reference
+          - greetings
 
   Database:
     id: database
@@ -200,12 +215,12 @@ technical_assets:
     out_of_scope: false
     justification_out_of_scope:
     size: component # values: system, service, application, component
-    technology: web-service-rest # values: see help
+    technology: database # values: see help
     tags:
       - some-tag
       - some-other-tag
     internet: false
-    machine: virtual # values: physical, virtual, container, serverless
+    machine: container # values: physical, virtual, container, serverless
     encryption: none # values: none, transparent, data-with-symmetric-shared-key, data-with-asymmetric-shared-key, data-with-enduser-individual-key
     owner: Some Owner
     confidentiality: confidential # values: public, internal, restricted, confidential, strictly-confidential
@@ -217,7 +232,8 @@ technical_assets:
     custom_developed_parts: true
     data_assets_processed: # sequence of IDs to reference
       - greetings
-    data_assets_stored: # sequence of IDs to reference
+    data_assets_stored:
+      - greetings # sequence of IDs to reference
     data_formats_accepted: # sequence of formats like: json, xml, serialization, file, csv
       - serialization
     communication_links:
@@ -230,7 +246,8 @@ trust_boundaries:
     type: network-dedicated-hoster # values: see help
     tags:
     technical_assets_inside: # sequence of IDs to reference
-      - some-component
+      - backend
+      - database
     trust_boundaries_nested: # sequence of IDs to reference
 
 
@@ -238,13 +255,14 @@ trust_boundaries:
 
 shared_runtimes:
 
-  Some Shared Runtime:
-    id: some-runtime
-    description: Some Description
+  EKS:
+    id: eks
+    description: AWS containerization
     tags:
     technical_assets_running: # sequence of IDs to reference
-      - some-component
-      - some-other-component
+      - frontend
+      - backend
+      - database
 
 
 
@@ -274,9 +292,9 @@ individual_risk_categories: # used for adding custom manually identified risks
         exploitation_impact: medium # values: low, medium, high, very-high
         data_breach_probability: probable # values: improbable, possible, probable
         data_breach_technical_assets: # list of technical asset IDs which might have data breach
-          - some-component
+          - database
         most_relevant_data_asset:
-        most_relevant_technical_asset: some-component
+        most_relevant_technical_asset: database
         most_relevant_communication_link:
         most_relevant_trust_boundary:
         most_relevant_shared_runtime:
@@ -295,12 +313,12 @@ individual_risk_categories: # used for adding custom manually identified risks
 # seeding the risk tracking part here based on already identified and not yet handled risks.
 risk_tracking:
 
-  unencrypted-asset@some-component: # wildcards "*" between the @ characters are possible
+  unencrypted-asset@database: # wildcards "*" between the @ characters are possible
     status: accepted # values: unchecked, in-discussion, accepted, in-progress, mitigated, false-positive
     justification: Risk accepted as tolerable
     ticket: XYZ-1234
-    date: 2020-01-04
-    checked_by: John Doe
+    date: 2023-10-01
+    checked_by: Ciro Bologna
 
 
 

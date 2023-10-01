@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
+import React, { FormEvent, useEffect, useState } from "react";
 import "./App.css";
 
 type Greeting = {
@@ -8,36 +7,52 @@ type Greeting = {
 };
 
 function App() {
+  const [message, setMessage] = useState('');
   const [greeting, setGreeting] = useState<Greeting>();
-  useEffect(() => {
-    fetch("/api")
-      .then(res => res.json())
-      .then(setGreeting)
-      .catch(console.error);
-  }, [setGreeting]);
+
+  let handleClick= async (e: any) => {
+    console.log('button clicked')
+    e.preventDefault();
+    try {
+      let res = await fetch("/api/greetings", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: message }),
+      });
+      let resJson = await res.json();
+      if (res.status === 201) {
+        console.log('ok')
+        setMessage("");
+        setGreeting(resJson);
+      } else {
+        setMessage("Some error occured");
+        console.log(res)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <div>
+          <h1>Welcome to my app</h1>
+        </div>
+        <textarea id="message" name="message" value={message} onChange={e => setMessage(e.target.value)} rows={4} cols={40}>
+        </textarea>
+        <br /> 
+        <button type="submit" onClick={handleClick}>Submit form</button>
         {greeting ? (
-          <p>Hello from {greeting.name}</p>
+          <p> you have sent this message: {greeting.name}</p>
         ) : (
-          <p>Loading...</p>
+          <p>Leave a greeting for your friendly security architect</p>
         )}
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );
+
 }
 
 export default App;
