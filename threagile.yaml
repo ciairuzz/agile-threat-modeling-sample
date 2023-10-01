@@ -47,7 +47,10 @@ tags_available:
     - ocp
     - openshift
     - tomcat
-    - some-tag
+    - react
+    - nginx
+    - spring
+    - mysql
     - some-other-tag
     - aws secret manager
 data_assets:
@@ -74,7 +77,7 @@ data_assets:
         confidentiality: confidential
         integrity: critical
         availability: archive
-        justification_cia_rating: greetings should remain private and should not be
+        justification_cia_rating: greetings should remain private and should not be disclosed to unauthorized users
 technical_assets:
     AWS Secret Manager Vault:
         id: aws-secret-manager-vault
@@ -89,7 +92,7 @@ technical_assets:
         tags:
             - aws secret manager
         internet: false
-        machine: virtual
+        machine: serverless
         encryption: transparent
         owner: ""
         confidentiality: strictly-confidential
@@ -116,10 +119,10 @@ technical_assets:
         size: component
         technology: web-service-rest
         tags:
-            - some-tag
-            - some-other-tag
+            - tomcat
+            - spring
         internet: false
-        machine: virtual
+        machine: container
         encryption: none
         owner: Some Owner
         confidentiality: confidential
@@ -141,7 +144,7 @@ technical_assets:
                 target: database
                 description: Some Description
                 protocol: jdbc
-                authentication: none
+                authentication: credentials
                 authorization: none
                 tags: []
                 vpn: false
@@ -181,8 +184,7 @@ technical_assets:
         size: component
         technology: database
         tags:
-            - some-tag
-            - some-other-tag
+            - mysql
         internet: false
         machine: container
         encryption: none
@@ -210,11 +212,11 @@ technical_assets:
         used_as_client_by_human: true
         out_of_scope: false
         justification_out_of_scope: ""
-        size: component
+        size: application
         technology: browser
         tags:
-            - some-tag
-            - some-other-tag
+            - react
+            - nginx
         internet: true
         machine: container
         encryption: transparent
@@ -250,10 +252,10 @@ technical_assets:
                 diagram_tweak_weight: 0
                 diagram_tweak_constraint: false
 trust_boundaries:
-    Some Trust Boundary:
-        id: some-network
+    Trust Boundary:
+        id: trusted-boundary
         description: Some Description
-        type: network-dedicated-hoster
+        type: network-cloud-security-group
         tags: []
         technical_assets_inside:
             - backend
